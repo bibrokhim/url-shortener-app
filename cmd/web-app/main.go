@@ -1,25 +1,12 @@
 package main
 
 import (
-	"html/template"
+	"github.com/bibrokhim/url-shortener-app/internal/controllers"
 	"log"
 	"net/http"
 )
 
 func main() {
-	http.HandleFunc("/", ShowHomePage)
+	http.HandleFunc("/", controllers.ShowIndex)
 	log.Fatal(http.ListenAndServe(":8080", nil))
-}
-
-func ShowHomePage(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("internal/views/index.html")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	if err = tmpl.Execute(w, nil); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
 }
